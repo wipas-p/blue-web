@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: blue-web
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+  selector:
+    app: blue-web
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blue-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blue-web
+  template:
+    metadata:
+      labels:
+        app: blue-web
+    spec:
+      containers:
+      - name: blue-web
+        image: wipasp/blue-web
+        ports:
+        - containerPort: 80
+        env:
+        - name: MESSAGE
+          value: Blue Web
