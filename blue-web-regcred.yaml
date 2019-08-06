@@ -26,11 +26,11 @@ spec:
       containers:
       - name: blue-web
         image: harbor.local/project-ada/blue-web:latest
-        imagePullSecrets:
-          - name: ada01-regcred
         imagePullPolicy: Always     
         ports:
         - containerPort: 80
         env:
-        - name: MESSAGE
-          value: Blue Web
+        - name: messages
+          value: Hello
+      imagePullSecrets:
+      - name: ada01-regcred
