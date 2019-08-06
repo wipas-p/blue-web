@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: blue-web
-        image: harbor.local/project-ada/blue-web:latest
+        image: harbor.local/project-ada/blue-web:1.0
         imagePullPolicy: Always     
         ports:
         - containerPort: 80
