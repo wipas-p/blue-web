@@ -26,9 +26,9 @@ spec:
       containers:
       - name: blue-web
         image: wipasp/blue-web:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
-    imagePullPolicy: Always
         env:
         - name: MESSAGE
           value: Blue Web
