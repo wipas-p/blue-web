@@ -1,0 +1,44 @@
+jenkins pipeline : blue-web
+
+def REGISTRY="harbor.local"
+def RepoName="project-ada"
+
+pipeline {
+    agent any
+
+    environment {
+        dockerImage = ''
+    }
+
+    stages {
+      
+        stage('Clone SCM') {
+            steps {
+              git branch: 'master', url: 'https://github.com/wipas-p/blue-web.git'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                echo "Build Docker Stage"
+                echo "docker build -t ${REGISTRY}/${Project}"
+                sh "sudo docker build -t ${REGISTRY}/${RepoName}/blue-web:1.0 ."
+            }
+        }
+
+        stage('PushtImage') {
+            steps {
+                echo "Push Image Stage"
+                sh "sudo docker push ${REGISTRY}/${RepoName}/blue-web:1.0"
+            }
+        }
+
+        stage('Deployment') {
+            steps {
+                echo "Deployment Stage"
+                sh "kubectl -n kong-test apply -f blue-web-regcred.yaml"
+            }
+        }
+
+    }
+}
